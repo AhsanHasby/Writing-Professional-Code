@@ -3,6 +3,7 @@
 #define TOTAL_STUDENTS  3
 #define TOTAL_SUBJECTS  3
 
+// Computing average for marks grading
 float calculate_average(int marks[TOTAL_SUBJECTS]) {
     int total_marks = 0;
 
@@ -12,7 +13,7 @@ float calculate_average(int marks[TOTAL_SUBJECTS]) {
 
     return total_marks / (float)TOTAL_SUBJECTS;
 }
-
+// Printing grade based on average
 void get_grade(float average, char name[10]) {
     if (average >= 80) {
             printf("%s - Grade A | Average marks = %.2f\n", name, average);
@@ -27,7 +28,7 @@ void get_grade(float average, char name[10]) {
             printf("%s - Failed | Average marks = %.2f\n", name, average);
     }
 }
-
+// Returning the index of the topper
 int find_topper(int marks[TOTAL_STUDENTS][TOTAL_SUBJECTS]) {
     int max_marks = 0, topper = 0;
     for (int student = 0; student < TOTAL_STUDENTS; student++) {
@@ -53,8 +54,9 @@ int main() {
         {30, 40, 50}
     };
     char names[TOTAL_STUDENTS][10] = {"Ali", "Bob", "Cat"};
-    int student, subject, total_marks;
+    int student, subject;
 
+    //Print each student's grade
     for (student = 0; student < TOTAL_STUDENTS; student++) {
         float average = calculate_average(marks[student]);
         get_grade(average, names[student]);
@@ -62,7 +64,7 @@ int main() {
 
     int topper = find_topper(marks);
     int topper_marks = 0;
-    
+    //Calculating toppers total marks
     for(int subject = 0; subject < TOTAL_SUBJECTS; subject++) {
         topper_marks += marks[topper][subject];
     }
