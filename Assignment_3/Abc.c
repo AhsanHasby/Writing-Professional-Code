@@ -1,52 +1,73 @@
 #include<stdio.h> 
 
-int main() { 
-    int marks[3][3] = {
-        {50, 60, 70},
-        {80, 90, 100},
-        {30, 40, 50}
-    };
-    char names[3][10] = {"Ali", "Bob", "Cat"};
-    int student_index, subject_index, total_marks;
-    float average; 
+#define TOTAL_STUDENTS  3
+#define TOTAL_SUBJECTS  3
 
-    for (student_index = 0; student_index < 3; student_index++) {
-        total_marks = 0;
+float calculate_average(int marks[TOTAL_SUBJECTS]) {
+    int total_marks = 0;
 
-        for (subject_index = 0; subject_index < 3; subject_index++) {
-            total_marks += marks[student_index][subject_index];
-        }
-        average = total_marks/3.0;
-
-        if (average >= 80) {
-            printf("%s - Grade A | Average marks = %.2f\n", names[student_index], average);
-        }
-        else if (average >= 60) {
-            printf("%s - Grade B | Average marks = %.2f\n", names[student_index], average);
-        }
-        else if (average >= 40) {
-            printf("%s - Grade C | Average marks = %.2f\n", names[student_index], average);
-        }
-        else { 
-            printf("%s - Failed | Average marks = %.2f\n", names[student_index], average);
-        }
+    for (int subject = 0; subject < TOTAL_SUBJECTS; subject++) {
+        total_marks += marks[subject];
     }
 
-    int max_marks = 0, topper_index = 0;
-    for (student_index = 0; student_index < 3; student_index++) {
-        total_marks = 0;
+    return total_marks / (float)TOTAL_SUBJECTS;
+}
 
-        for (subject_index = 0; subject_index < 3; subject_index++) {
-            total_marks += marks[student_index][subject_index];
+void get_grade(float average, char name[10]) {
+    if (average >= 80) {
+            printf("%s - Grade A | Average marks = %.2f\n", name, average);
+    }
+    else if (average >= 60) {
+            printf("%s - Grade B | Average marks = %.2f\n", name, average);
+    }
+    else if (average >= 40) {
+            printf("%s - Grade C | Average marks = %.2f\n", name, average);
+    }
+    else { 
+            printf("%s - Failed | Average marks = %.2f\n", name, average);
+    }
+}
+
+int find_topper(int marks[TOTAL_STUDENTS][TOTAL_SUBJECTS]) {
+    int max_marks = 0, topper = 0;
+    for (int student = 0; student < TOTAL_STUDENTS; student++) {
+        int total_marks = 0;
+
+        for (int subject = 0; subject < TOTAL_SUBJECTS; subject++) {
+            total_marks += marks[student][subject];
         }
 
         if (total_marks > max_marks) {
             max_marks = total_marks;
-            topper_index = student_index;
+            topper = student;
         }
     }
 
-    printf("Topper: %s \nwith total marks: %d\n", names[topper_index], max_marks);
+    return topper;
+}
+
+int main() { 
+    int marks[TOTAL_STUDENTS][TOTAL_SUBJECTS] = {
+        {50, 60, 70},
+        {80, 90, 100},
+        {30, 40, 50}
+    };
+    char names[TOTAL_STUDENTS][10] = {"Ali", "Bob", "Cat"};
+    int student, subject, total_marks;
+
+    for (student = 0; student < TOTAL_STUDENTS; student++) {
+        float average = calculate_average(marks[student]);
+        get_grade(average, names[student]);
+    }
+
+    int topper = find_topper(marks);
+    int topper_marks = 0;
+    
+    for(int subject = 0; subject < TOTAL_SUBJECTS; subject++) {
+        topper_marks += marks[topper][subject];
+    }
+    
+    printf("Topper: %s \nwith total marks: %d\n", names[topper], topper_marks);
         
     return 0;
 } 
