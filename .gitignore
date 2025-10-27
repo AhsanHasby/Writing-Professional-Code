@@ -1,4 +1,4 @@
 *.exe
 *.log
 .vscode
-!Assignment/Print.exe
+!Assignment_1/Print.exe
